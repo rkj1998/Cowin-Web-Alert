@@ -33,7 +33,6 @@ class _WorkingState extends State<Working> {
     String date = DateFormat('dd-MM-yyyy').format(DateTime.now());
     var url = Uri.parse(baseUrl+"v2/appointment/sessions/public/calendarByDistrict?district_id=$distID&date=$date");
     var response = await http.get(url);
-    print(response.body);
     return jsonDecode(response.body);
   }
   playLocal() async {
@@ -53,26 +52,31 @@ class _WorkingState extends State<Working> {
             if(snapshot.connectionState==ConnectionState.none){
               return Center(child: CircularProgressIndicator());
             }
+            else if(snapshot.connectionState==ConnectionState.waiting){
+              return Center(child: CircularProgressIndicator());
+            }
             else if(widget.dose==1&&widget.age==18)  {
               for(int i=0;i<snapshot.data['centers'].length;i++){
                 for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
-                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']=="18"&&
-                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']!="0"){
+                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']==18&&
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']!=0){
                     playLocal();
 
                     return Container(
                      child: ListView(
                        children: [
                          Container(
-                           child: Row(
-                             children: [
-                               Text("Centre Name : "+snapshot.data['centers'][i]['sessions']['name']),
-                               SizedBox(height:height*.02,),
-                               Text("Pin Code : "+snapshot.data['centers'][i]['sessions']['pincode']),
-                               SizedBox(height:height*.02,),
-                               Text("Available Doses : "+
-                                   snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']),
-                             ],
+                           child: Center(
+                             child: Column(
+                               children: [
+                                 Text("Centre Name : "+snapshot.data['centers'][i]['name']),
+                                 SizedBox(height:height*.02,),
+                                 Text("Pin Code : "+snapshot.data['centers'][i]['pincode'].toString()),
+                                 SizedBox(height:height*.02,),
+                                 Text("Available Doses : "+
+                                     snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1'].toString()),
+                               ],
+                             ),
                            ),
                          )
                        ],
@@ -85,23 +89,24 @@ class _WorkingState extends State<Working> {
             else if(widget.dose==1&&widget.age==45) {
               for(int i=0;i<snapshot.data['centers'].length;i++){
                 for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
-                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']=="45"&&
-                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']!="0"){
+                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']==45&&
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']!=0){
                     playLocal();
-
                     return Container(
                       child: ListView(
                         children: [
                           Container(
-                            child: Row(
-                              children: [
-                                Text("Centre Name : "+snapshot.data['centers'][i]['sessions']['name']),
-                                SizedBox(height:height*.02,),
-                                Text("Pin Code : "+snapshot.data['centers'][i]['sessions']['pincode']),
-                                SizedBox(height:height*.02,),
-                                Text("Available Doses : "+
-                                    snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']),
-                              ],
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text("Centre Name : "+snapshot.data['centers'][i]['name']),
+                                  SizedBox(height:height*.02,),
+                                  Text("Pin Code : "+snapshot.data['centers'][i]['pincode'].toString()),
+                                  SizedBox(height:height*.02,),
+                                  Text("Available Doses : "+
+                                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1'].toString()),
+                                ],
+                              ),
                             ),
                           )
                         ],
@@ -114,23 +119,26 @@ class _WorkingState extends State<Working> {
             else if(widget.dose==2&&widget.age==18) {
               for(int i=0;i<snapshot.data['centers'].length;i++){
                 for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
-                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']=="18"&&
-                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']!="0"){
+                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']==18&&
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']!=0){
                     playLocal();
 
                     return Container(
                       child: ListView(
                         children: [
                           Container(
-                            child: Row(
-                              children: [
-                                Text("Centre Name : "+snapshot.data['centers'][i]['sessions']['name']),
-                                SizedBox(height:height*.02,),
-                                Text("Pin Code : "+snapshot.data['centers'][i]['sessions']['pincode']),
-                                SizedBox(height:height*.02,),
-                                Text("Available Doses : "+
-                                    snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']),
-                              ],
+                            child: Center(
+                              child: Column(
+
+                                children: [
+                                  Text("Centre Name : "+snapshot.data['centers'][i]['name']),
+                                  SizedBox(height:height*.02,),
+                                  Text("Pin Code : "+snapshot.data['centers'][i]['pincode'].toString()),
+                                  SizedBox(height:height*.02,),
+                                  Text("Available Doses : "+
+                                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2'].toString()),
+                                ],
+                              ),
                             ),
                           )
                         ],
@@ -143,26 +151,29 @@ class _WorkingState extends State<Working> {
             else if(widget.dose==2&&widget.age==45) {
               for(int i=0;i<snapshot.data['centers'].length;i++){
                 for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
-                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']=="45"&&
-                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']!="0"){
+                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']==45&&
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']!=0){
                     playLocal();
 
                     return Container(
-                      child: ListView(
-                        children: [
-                          Container(
-                            child: Row(
-                              children: [
-                                Text("Centre Name : "+snapshot.data['centers'][i]['sessions']['name']),
-                                SizedBox(height:height*.02,),
-                                Text("Pin Code : "+snapshot.data['centers'][i]['sessions']['pincode']),
-                                SizedBox(height:height*.02,),
-                                Text("Available Doses : "+
-                                    snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']),
-                              ],
-                            ),
-                          )
-                        ],
+                      child: Center(
+                        child: ListView(
+                          children: [
+                            Container(
+                              child: Column(
+                                children: [
+                                  Text("Centre Name : "+snapshot.data['centers'][i]['name']),
+                                  SizedBox(height:height*.02,),
+                                  Text("Pin Code : "+snapshot.data['centers'][i]['pincode'].toString()),
+                                  SizedBox(height:height*.02,),
+                                  Text("Available Doses : "+
+                                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2'].toString()),
+                                  SizedBox(height:height*.08,),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   }

@@ -28,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
     getStates() async {
       var url = Uri.parse(baseUrl+"v2/admin/location/states");
       var response = await http.get(url);
-      print(response.body);
       return jsonDecode(response.body);
     }
     getDistricts(int stateID) async {
