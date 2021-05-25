@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cowin_web_alert/const.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -32,20 +33,153 @@ class _WorkingState extends State<Working> {
     String date = DateFormat('dd-MM-yyyy').format(DateTime.now());
     var url = Uri.parse(baseUrl+"v2/appointment/sessions/public/calendarByDistrict?district_id=$distID&date=$date");
     var response = await http.get(url);
-    print(response.body);
+    print(jsonDecode(response.body)["centers"]);
     return jsonDecode(response.body);
   }
+  playLocal() async {
+    AudioPlayer audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+    int result = await audioPlayer.play("sounds/siren.mp3", isLocal: true);
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: FutureBuilder(
         future: _future,
-          builder: (BuildContext context,AsyncSnapshot<dynamic> snapshot){
+          builder: (BuildContext context,AsyncSnapshot<dynamic> snapshot) {
             if(snapshot.connectionState==ConnectionState.waiting){
               return CircularProgressIndicator();
             }
-            else return Container();
+            else if(widget.dose==1&&widget.age==18)  {
+              for(int i=0;i<snapshot.data['centers'].length;i++){
+                for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
+                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']=="18"&&
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']!="0"){
+                    playLocal();
+
+                    return Container(
+                     child: ListView(
+                       children: [
+                         Container(
+                           child: Row(
+                             children: [
+                               Text("Centre Name : "+snapshot.data['centers'][i]['sessions']['name']),
+                               SizedBox(height:height*.02,),
+                               Text("Pin Code : "+snapshot.data['centers'][i]['sessions']['pincode']),
+                               SizedBox(height:height*.02,),
+                               Text("Available Doses : "+
+                                   snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']),
+                             ],
+                           ),
+                         )
+                       ],
+                     ),
+                    );
+                  }
+                }
+              }
+            }
+            else if(widget.dose==1&&widget.age==45) {
+              for(int i=0;i<snapshot.data['centers'].length;i++){
+                for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
+                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']=="45"&&
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']!="0"){
+                    playLocal();
+
+                    return Container(
+                      child: ListView(
+                        children: [
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("Centre Name : "+snapshot.data['centers'][i]['sessions']['name']),
+                                SizedBox(height:height*.02,),
+                                Text("Pin Code : "+snapshot.data['centers'][i]['sessions']['pincode']),
+                                SizedBox(height:height*.02,),
+                                Text("Available Doses : "+
+                                    snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                }
+              }
+            }
+            else if(widget.dose==2&&widget.age==18) {
+              for(int i=0;i<snapshot.data['centers'].length;i++){
+                for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
+                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']=="18"&&
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']!="0"){
+                    playLocal();
+
+                    return Container(
+                      child: ListView(
+                        children: [
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("Centre Name : "+snapshot.data['centers'][i]['sessions']['name']),
+                                SizedBox(height:height*.02,),
+                                Text("Pin Code : "+snapshot.data['centers'][i]['sessions']['pincode']),
+                                SizedBox(height:height*.02,),
+                                Text("Available Doses : "+
+                                    snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                }
+              }
+            }
+            else if(widget.dose==2&&widget.age==45) {
+              for(int i=0;i<snapshot.data['centers'].length;i++){
+                for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
+                  if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']=="45"&&
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']!="0"){
+                    playLocal();
+
+                    return Container(
+                      child: ListView(
+                        children: [
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("Centre Name : "+snapshot.data['centers'][i]['sessions']['name']),
+                                SizedBox(height:height*.02,),
+                                Text("Pin Code : "+snapshot.data['centers'][i]['sessions']['pincode']),
+                                SizedBox(height:height*.02,),
+                                Text("Available Doses : "+
+                                    snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                }
+              }
+            }
+            return Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height:height*.02,),
+                  Text("Please Wait Searching"),
+                ],
+              ),
+            );
           }
       ),
     );

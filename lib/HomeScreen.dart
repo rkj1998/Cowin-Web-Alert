@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:cowin_web_alert/Work.dart';
 import 'package:cowin_web_alert/const.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -84,7 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ],
                             ),
-                            margin: EdgeInsets.only(top: 8),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 25, vertical: 5),
                             alignment: Alignment.center,
@@ -136,7 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ],
                                   ),
-                                  margin: EdgeInsets.only(top: 8),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 25, vertical: 5),
                                   alignment: Alignment.center,
@@ -185,7 +182,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                margin: EdgeInsets.only(top: 8),
                 padding: EdgeInsets.symmetric(
                     horizontal: 25, vertical: 5),
                 alignment: Alignment.center,
@@ -207,6 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     }),
               ):Container(),
+              SizedBox(height: height*.02,),
               dropdown3!="Select Age Category"?
               Container(
                 height: height*.07,
@@ -222,7 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                margin: EdgeInsets.only(top: 8),
                 padding: EdgeInsets.symmetric(
                     horizontal: 25, vertical: 5),
                 alignment: Alignment.center,
@@ -244,11 +240,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     }),
               ):Container(),
+              SizedBox(height: height*.02,),
               dropdown4!="Select Dose"?
               Container(
                 width: width * 0.9,
                 height: height*.07,
-                margin: EdgeInsets.only(top: 8),
                 decoration: new BoxDecoration(
                   color: Colors.deepPurple,
                   borderRadius: new BorderRadius.circular(40.0),
