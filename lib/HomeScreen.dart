@@ -209,10 +209,42 @@ class _HomeScreenState extends State<HomeScreen> {
               ):Container(),
               dropdown3!="Select Age Category"?
               Container(
-
+                height: height*.07,
+                decoration: new BoxDecoration(
+                  color:  Colors.white,
+                  borderRadius: new BorderRadius.circular(40.0),
+                  border:Border.all(width: .2,color: Colors.grey.withOpacity(.6)),
+                  boxShadow: <BoxShadow>[
+                    new BoxShadow(
+                      color: Colors.grey.withOpacity(1),
+                      blurRadius: 15.0,
+                      spreadRadius: -5.5,
+                    ),
+                  ],
+                ),
+                margin: EdgeInsets.only(top: 8),
+                padding: EdgeInsets.symmetric(
+                    horizontal: 25, vertical: 5),
+                alignment: Alignment.center,
+                child: DropdownButton(
+                    underline: SizedBox(),
+                    isExpanded: true,
+                    value: dropdown4,
+                    items: List.generate(dose.length, (j) {
+                      return DropdownMenuItem(
+                          value: dose[j],
+                          child: Text(
+                            dose[j],
+                            style: TextStyle(fontSize: 13),
+                          ));
+                    }),
+                    onChanged: (c)  {
+                      setState(() {
+                        dropdown4=c.toString();
+                      });
+                    }),
               ):Container(),
-
-              dropdown!="Select State"&&dropdown2!="Select District"?
+              dropdown4!="Select Dose"?
               Container(
                 width: width * 0.9,
                 height: height*.07,
@@ -231,8 +263,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: TextButton(
                   onPressed: (){
+                    var age,dose;
+                    dropdown3=="18+"?age=18:age=45;
+                    dropdown4=="1st"?dose=1:dose=2;
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Working(
-                          distMap[dropdown2])));
+                          distMap[dropdown2],age,dose)));
                   },
                   child: Text(
                     "Start",

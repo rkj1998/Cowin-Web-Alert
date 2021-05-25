@@ -8,8 +8,8 @@ import 'package:intl/intl.dart';
 
 
 class Working extends StatefulWidget {
-  final distId;
-  Working(this.distId);
+  final distId,age,dose;
+  Working(this.distId,this.age,this.dose);
   @override
   _WorkingState createState() => _WorkingState();
 }
