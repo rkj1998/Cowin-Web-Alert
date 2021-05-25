@@ -37,7 +37,7 @@ class _WorkingState extends State<Working> {
   }
   playLocal() async {
     AudioPlayer audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
-    int result = await audioPlayer.play("sounds/siren.mp3", isLocal: true);
+     await audioPlayer.play("sounds/siren.mp3", isLocal: true);
   }
 
 
