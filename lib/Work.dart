@@ -23,7 +23,7 @@ class _WorkingState extends State<Working> {
     setUpTimedFetch();
   }
   setUpTimedFetch() {
-    Timer.periodic(Duration(seconds: 3), (timer) {
+    Timer.periodic(Duration(seconds: 4), (timer) {
       setState(() {
         _future = getSlots(widget.distId);
       });
@@ -33,7 +33,7 @@ class _WorkingState extends State<Working> {
     String date = DateFormat('dd-MM-yyyy').format(DateTime.now());
     var url = Uri.parse(baseUrl+"v2/appointment/sessions/public/calendarByDistrict?district_id=$distID&date=$date");
     var response = await http.get(url);
-    print(jsonDecode(response.body)["centers"]);
+    print(response.body);
     return jsonDecode(response.body);
   }
   playLocal() async {
@@ -50,8 +50,8 @@ class _WorkingState extends State<Working> {
       body: FutureBuilder(
         future: _future,
           builder: (BuildContext context,AsyncSnapshot<dynamic> snapshot) {
-            if(snapshot.connectionState==ConnectionState.waiting){
-              return CircularProgressIndicator();
+            if(snapshot.connectionState==ConnectionState.none){
+              return Center(child: CircularProgressIndicator());
             }
             else if(widget.dose==1&&widget.age==18)  {
               for(int i=0;i<snapshot.data['centers'].length;i++){
@@ -169,15 +169,17 @@ class _WorkingState extends State<Working> {
                 }
               }
             }
-            return Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height:height*.02,),
-                  Text("Please Wait Searching"),
-                ],
+            return Center(
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height:height*.02,),
+                    Text("Please Wait Searching"),
+                  ],
+                ),
               ),
             );
           }
