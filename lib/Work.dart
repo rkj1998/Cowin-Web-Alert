@@ -23,7 +23,7 @@ class _WorkingState extends State<Working> {
     setUpTimedFetch();
   }
   setUpTimedFetch() {
-    Timer.periodic(Duration(seconds: 4), (timer) {
+    Timer.periodic(Duration(seconds: 5), (timer) {
       setState(() {
         _future = getSlots(widget.distId);
       });
@@ -59,7 +59,7 @@ class _WorkingState extends State<Working> {
               for(int i=0;i<snapshot.data['centers'].length;i++){
                 for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
                   if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']==18&&
-                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']!=0){
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']>1){
                     playLocal();
 
                     return Container(
@@ -90,7 +90,7 @@ class _WorkingState extends State<Working> {
               for(int i=0;i<snapshot.data['centers'].length;i++){
                 for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
                   if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']==45&&
-                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']!=0){
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose1']>1){
                     playLocal();
                     return Container(
                       child: ListView(
@@ -120,7 +120,7 @@ class _WorkingState extends State<Working> {
               for(int i=0;i<snapshot.data['centers'].length;i++){
                 for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
                   if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']==18&&
-                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']!=0){
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']>1){
                     playLocal();
 
                     return Container(
@@ -152,7 +152,7 @@ class _WorkingState extends State<Working> {
               for(int i=0;i<snapshot.data['centers'].length;i++){
                 for(int j=0;j<snapshot.data['centers'][i]['sessions'].length;j++){
                   if(snapshot.data['centers'][i]['sessions'][j]['min_age_limit']==45&&
-                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']!=0){
+                      snapshot.data['centers'][i]['sessions'][j]['available_capacity_dose2']>1){
                     playLocal();
 
                     return Container(

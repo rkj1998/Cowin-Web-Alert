@@ -45,3 +45,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 firebase-tools-instant-win.exe
+.firebase/hosting.YnVpbGRcd2Vi.cache
+.firebaserc
+firebase.json
+sounds/SlackSetup.exe
